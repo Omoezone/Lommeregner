@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lommeregner</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="wrapper">
+    <table>
+        <thead>
+            <tr>
+                <input type="text" name="display" id="display" disabled>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="button" class="design" id="one" value="1"></td>
+                <td><input type="button" class="design" id="two" value="2"></td>
+                <td><input type="button" class="design" id="three" value="3"></td>
+                <td><input type="button" class="design not" id="plus" value="+"></td>
+            </tr>
+            <tr>
+                <td><input type="button" class="design" id="four" value="4"></td>
+                <td><input type="button" class="design" id="five" value="5"></td>
+                <td><input type="button" class="design" id="six" value="6"></td>
+                <td><input type="button" class="design not" id="minus" value="-"></td>
+            </tr>
+            <tr>
+                <td><input type="button" class="design" id="seven" value="7"></td>
+                <td><input type="button" class="design" id="eight" value="8"></td>
+                <td><input type="button" class="design" id="nine" value="9"></td>
+                <td><input type="button" class="design not" id="multi" value="*"></td>
+            </tr>
+            <tr>
+                <td><input type="button" class="design not" id="delete" value="C"></td>
+                <td><input type="button" class="design" id="zero" value="0"></td>
+                <td><input type="button" class="design not" id="equal" value="="></td>
+                <td><input type="button" class="design not" id="divide" value="/"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    var result;
+    var operator;
+    var finalResult;
+    var flag = true;
+    $(document).ready(function(){
+        $(".design").click(function() {
+            let x = $(this).val();
+            if(!$(this).hasClass("not")) {
+                if(finalResult==0) {
+                    $("#display").val(x);
+                    if(flag) {
+                        finalResult = x;
+                        flag = false;
+                    }else
+                        result = x;
+                }else{
+                    $("#display").val(x);
+                    if(flag) {
+                        finalResult = x;
+                        flag = false;
+                    }else
+                        result = x;
+                }
+            }else if($(this).hasClass("not"))
+            { // CHECK IF IT HAS A GIVEN ID!!
+                if($(this).val()=="/"){
+                    operator = "/";
+                }else if($(this).val()=="-"){
+                    operator = "-";
+                }else if($(this).val()=="*"){
+                    operator = "*";
+                }else if($(this).val()=="+"){
+                    operator = "+";
+                }else
+                    $("#display").val("?");
+            }
+
+        });
+        $("#equal").click(function() {
+            var array = [finalResult,operator,result];
+            finalResult = Number.parseInt(finalResult);
+            result = Number.parseInt(result);
+
+            if(operator=="/"){
+                finalResult = finalResult / result;
+            }else if(operator=="-"){
+                finalResult = finalResult - result;
+            }else if(operator=="*"){
+                finalResult = finalResult * result;
+            }else if(operator=="+")
+                finalResult = finalResult + result;
+            $("#display").val(finalResult);
+            flag = true;
+        });
+        $("#delete").click(function(){
+            $("#display").val(0);
+            result = "";
+            finalResult = "";
+            flag = true;
+        });
+    });
+
+
+
+</script>
+</body>
+</html>
